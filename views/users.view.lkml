@@ -50,6 +50,12 @@ view: users {
 
     }
   }
+  dimension: :country1 {
+    type: string
+    map_layer_name: countries
+    sql: ${TABLE}.country ;;
+     html:<a style="font-size: 20px;" href="/dashboards/souvik2314::ecommerce_sales_dashboard">{{ value }}</a>;;
+  }
   # Dates and timestamps can be represented in Looker using a dimension group of type: time.
   # Looker converts dates and timestamps to the specified timeframes within the dimension group.
 
