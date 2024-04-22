@@ -51,7 +51,23 @@ view: order_items {
     type: number
     sql: ${TABLE}.sale_price ;;
   }
-
+  dimension: GMF{
+    type: number
+    sql: ${TABLE}.sale_price;;
+    html: {% if sale_price==0 %}
+          <div style="font-size: 20px;">{{ rendered_value }} K‰</div>
+          {% elsif value  <= sale_price %}
+          <div style="font-size: 20px;"><span style="color: #5CBA63;">{{ rendered_value }}</span> K‰</div>
+          {% elsif value > sale_price %}
+          <div style="font-size: 20px;"><span style="color: #CB4B32;">{{ rendered_value }}</span> K‰</div>
+          {% else %}
+          <div style="font-size: 20px;">{{ rendered_value }} K‰</div>
+          {% endif %};;
+    link: {
+      label: "GMF 3 MIS"
+      url: "dashboards/souvik2314::ecommerce_sales_dashboard"
+    }
+  }
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.
