@@ -29,10 +29,28 @@ view: users {
   measure: total_age {
     type: sum
     sql: ${age} ;;  }
+
   measure: average_age {
     type: average
     sql: ${age} ;;  }
 
+  dimension: GMF{
+    type: number
+    sql: ${TABLE}.age;;
+    html: {% if  age==10 %}
+          <div style="font-size: 20px;">{{ rendered_value }} K‰</div>
+          {% elsif value  <= age %}
+          <div style="font-size: 20px;"><span style="color: #5CBA63;">{{ rendered_value }}</span> K‰</div>
+          {% elsif value >  age %}
+          <div style="font-size: 20px;"><span style="color: #CB4B32;">{{ rendered_value }}</span> K‰</div>
+          {% else %}
+          <div style="font-size: 20px;">{{ rendered_value }} K‰</div>
+          {% endif %};;
+    link: {
+      label: "GMF 3 MIS"
+      url: "/dashboards/mauromtr::subtotals_lookml_dashboard"
+    }
+  }
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
