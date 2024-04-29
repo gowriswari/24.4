@@ -47,27 +47,34 @@ view: order_items {
     sql: ${TABLE}.returned_at ;;
   }
 
-  dimension: sale_price {
+ dimension: sale_price1 {
+  hidden: yes
     type: number
     sql: ${TABLE}.sale_price ;;
+
   }
-  dimension: GMF{
+
+  dimension: target_sale_price {
+    type: number
+    sql:  3* (${TABLE}.sale_price);;
+    html:  <div style="font-size: 20px;">{{ rendered_value }} K‰</div>;;
+  }
+
+  dimension: sale_price{
     type: number
     sql: ${TABLE}.sale_price;;
-    html: {% if sale_price==0 %}
-          <div style="font-size: 20px;">{{ rendered_value }} K‰</div>
-          {% elsif value  <= sale_price %}
-          <div style="font-size: 20px;"><span style="color: #5CBA63;">{{ rendered_value }}</span> K‰</div>
-          {% elsif value > sale_price %}
-          <div style="font-size: 20px;"><span style="color: #CB4B32;">{{ rendered_value }}</span> K‰</div>
+    html: {% if target_sale_price._value==0 %}
+          <div target_sale_price="_self" href="/dashboards/mauromtr::subtotals_lookml_dashboard" style="font-size: 20px;">{{ rendered_value }} K‰</div>
+          {% elsif value  <= target_sale_price._value %}
+          <div target_sale_price="_self" href="/dashboards/mauromtr::subtotals_lookml_dashboard" style="font-size: 20px;"><span style="color: #5CBA63;">{{ rendered_value }}</span> K‰</div>
+          {% elsif value > target_sale_price._value%}
+          <div target_sale_price="_self" href="/dashboards/mauromtr::subtotals_lookml_dashboard" style="font-size: 20px;"><span style="color: #CB4B32;">{{ rendered_value }}</span> K‰</div>
           {% else %}
-          <div style="font-size: 20px;">{{ rendered_value }} K‰</div>
+          <div target_sale_price="_self" href="/dashboards/mauromtr::subtotals_lookml_dashboard" style="font-size: 20px;">{{ rendered_value }} K‰</div>
           {% endif %};;
-    link: {
-      label: "GMF 3 MIS"
-      url: "dashboards/souvik2314::ecommerce_sales_dashboard"
-    }
   }
+
+
   # A measure is a field that uses a SQL aggregate function. Here are defined sum and average
   # measures for this dimension, but you can also add measures of many different aggregates.
   # Click on the type parameter to see all the options in the Quick Help panel on the right.

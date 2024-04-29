@@ -51,6 +51,22 @@ view: users {
       url: "/dashboards/mauromtr::subtotals_lookml_dashboard"
     }
   }
+  dimension: vor{
+    type: number
+    sql: ${TABLE}.age;;
+    html:   {% if age==15 %}
+          <div style="font-size: 20px;" href="/dashboards/mauromtr::subtotals_lookml_dashboard">{{ value }} Vehicles</p>
+          {% elsif value > age%}
+          <div style="font-size: 20px;" href="/dashboards/mauromtr::subtotals_lookml_dashboard"><span style="color: #CB4B32;">{{ value }} </span>Vehicles</div>
+          {% elsif value  <= age %}
+          <div style="font-size: 20px;" href="/dashboards/mauromtr::subtotals_lookml_dashboard"><span style="color: #5CBA63;">{{ value }} </span>Vehicles</div>
+          {% endif %};;
+          # link: {
+          #   label: "Parts VOR Details"
+          #   url: "/dashboards/qdc::cockpit360__parts_vor"
+          # }
+    }
+
   dimension: city {
     type: string
     sql: ${TABLE}.city ;;
